@@ -61,6 +61,10 @@ jobs:
         # Push directly using the remote repo URL, which includes the secret so this job can push to the repo
         UPSTREAM="https://${{ secrets.NESSIE_BUILDER }}@github.com/${GITHUB_REPOSITORY}.git"
 
+        git config --rename-section http.https://github.com/ http.https://save.github.com/
+
         echo git push --no-verify --tags "${UPSTREAM}" HEAD:${GITHUB_REF}
         git push --no-verify "${UPSTREAM}" HEAD:${GITHUB_REF}
         git push --no-verify "${UPSTREAM}" ${GIT_TAG}
+
+        git config --rename-section http.https://save.github.com/ http.https://github.com/
