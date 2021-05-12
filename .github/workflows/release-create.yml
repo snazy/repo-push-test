@@ -48,6 +48,11 @@ jobs:
 
     - name: Foo
       run: cat .git/config
+      if: ${{ github.event_name == "push" }}
+
+    - name: Foo
+      run: cat .git/config
+      if: ${{ github.event_name == "workflow_dispatch" }}
 
     - name: Bar
       run: cat ~/.gitconfig
