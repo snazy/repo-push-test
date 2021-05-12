@@ -46,6 +46,12 @@ jobs:
     - name: Record ${{ github.event.inputs.nextVersion }} release in git
       run: git commit -a -m "[release] next development iteration"
 
+    - name: Foo
+      run: cat .git/config
+
+    - name: Bar
+      run: cat ~/.gitconfig
+
     # Push the 2 git commits and git tag. If this one fails, some other commit was pushed to the
     # 'main' branch and break the linear history for the Nessie git repo.
     # The `release-publish.yml` job will run when the release tag `nessie-x.y.z` has been pushed.
