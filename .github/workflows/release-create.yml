@@ -47,15 +47,12 @@ jobs:
       run: git commit -a -m "[release] next development iteration"
 
     - name: Foo
-      run: cat .git/config
-      if: ${{ github.event_name == "push" }}
+      run: echo "push"
+      if: ${{ github.event_name == 'push' }}
 
     - name: Foo
-      run: cat .git/config
-      if: ${{ github.event_name == "workflow_dispatch" }}
-
-    - name: Bar
-      run: cat ~/.gitconfig
+      run: echo "wf dispatch"
+      if: ${{ github.event_name == 'workflow_dispatch' }}
 
     # Push the 2 git commits and git tag. If this one fails, some other commit was pushed to the
     # 'main' branch and break the linear history for the Nessie git repo.
