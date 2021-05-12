@@ -1,0 +1,60 @@
+
+name: Create Release
+
+on:
+  # Manually triggered
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: 'The version to release - e.g. `0.5.0`'
+        required: true
+
+jobs:
+  create-release:
+    name: Create release
+    runs-on: ubuntu-latest
+    env:
+      GIT_TAG: nessie-${{ github.event.inputs.releaseVersion }}
+      RELEASE_VERSION: ${{ github.event.inputs.releaseVersion }}
+
+    steps:
+
+    ### BEGIN runner setup
+    - name: Checkout
+      uses: actions/checkout@v2
+    ### END runner setup
+
+    - name: Mock bump release version ${{ github.event.inputs.releaseVersion }}
+      run: echo "${GIT_TAG}  ${RELEASE_VERSION}" >> foo.txt
+
+    - name: Configure release-bot-user in git config
+      run: |
+        git config --global user.email "nessie-release-workflow-noreply@projectnessie.org"
+        git config --global user.name "Nessie Release Workflow [bot]"
+
+    # Record the release-version in git and add the git tag for the release.
+    - name: Record ${{ github.event.inputs.releaseVersion }} release in git
+      run: |
+        git commit -a -m "[release] release nessie-${RELEASE_VERSION}"
+        git tag -f ${GIT_TAG}
+
+    # Update versions to next development iteration
+    - name: Moch bump next development version version
+      run: echo "NEXT" >> foo.txt
+
+    # Record the next development iteration in git
+    - name: Record ${{ github.event.inputs.nextVersion }} release in git
+      run: git commit -a -m "[release] next development iteration"
+
+    # Push the 2 git commits and git tag. If this one fails, some other commit was pushed to the
+    # 'main' branch and break the linear history for the Nessie git repo.
+    # The `release-publish.yml` job will run when the release tag `nessie-x.y.z` has been pushed.
+    - name: Push tag + branch
+      if: ${{ !env.ACT }}
+      run: |
+        # Push directly using the remote repo URL, which includes the secret so this job can push to the repo
+        UPSTREAM="https://${{ secrets.NESSIE_BUILDER }}@github.com/${GITHUB_REPOSITORY}.git"
+
+        git push --no-verify "${UPSTREAM}" HEAD:${GITHUB_REF}
+        git push --no-verify "${UPSTREAM}" :refs/tags/${GIT_TAG}
+        git push --no-verify "${UPSTREAM}" ${GIT_TAG}
