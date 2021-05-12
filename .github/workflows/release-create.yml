@@ -63,8 +63,6 @@ jobs:
 
         git config --rename-section http.https://github.com/ http.https://save.github.com/
 
-        echo git push --no-verify --tags "${UPSTREAM}" HEAD:${GITHUB_REF}
-        git push --no-verify "${UPSTREAM}" HEAD:${GITHUB_REF}
-        git push --no-verify "${UPSTREAM}" ${GIT_TAG}
+        git push --no-verify "${UPSTREAM}" HEAD:${GITHUB_REF} ${GIT_TAG}
 
         git config --rename-section http.https://save.github.com/ http.https://github.com/
