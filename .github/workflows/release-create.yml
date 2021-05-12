@@ -56,5 +56,5 @@ jobs:
         UPSTREAM="https://${{ secrets.NESSIE_BUILDER }}@github.com/${GITHUB_REPOSITORY}.git"
 
         echo git push --no-verify --tags "${UPSTREAM}" HEAD:${GITHUB_REF}
-        git push --no-verify "${UPSTREAM}" ${GIT_TAG}
         git push --no-verify "${UPSTREAM}" HEAD:${GITHUB_REF}
+        git push --no-verify "${UPSTREAM}" ${GIT_TAG}
