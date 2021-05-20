@@ -1,6 +1,6 @@
 {
   "name": "nessie-ui",
-  "version": "${RELEASE_VERSION}",
+  "version": "0.8.1",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
