@@ -42,6 +42,13 @@ jobs:
     - name: Moch bump next development version version
       run: echo "NEXT" >> foo.txt
 
+    - name: Bump UI release version ${{ github.event.inputs.releaseVersion }}
+      run: |
+        cp package.json /tmp/nessie-ui-package.json
+        cp package-lock.json /tmp/nessie-ui-package-lock.json
+        cat /tmp/nessie-ui-package.json | jq '.version = "${RELEASE_VERSION}"' > package.json
+        cat /tmp/nessie-ui-package-lock.json | jq '.version = "${RELEASE_VERSION}"' > package-lock.json
+
     # Record the next development iteration in git
     - name: Record ${{ github.event.inputs.nextVersion }} release in git
       run: git commit -a -m "[release] next development iteration"
