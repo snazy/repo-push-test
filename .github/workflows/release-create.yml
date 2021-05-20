@@ -46,8 +46,8 @@ jobs:
       run: |
         cp package.json /tmp/nessie-ui-package.json
         cp package-lock.json /tmp/nessie-ui-package-lock.json
-        cat /tmp/nessie-ui-package.json | jq '.version = "${RELEASE_VERSION}"' > package.json
-        cat /tmp/nessie-ui-package-lock.json | jq '.version = "${RELEASE_VERSION}"' > package-lock.json
+        cat /tmp/nessie-ui-package.json | jq ".version = \"${RELEASE_VERSION}\"" > package.json
+        cat /tmp/nessie-ui-package-lock.json | jq ".version = \"${RELEASE_VERSION}\"" > package-lock.json
 
     # Record the next development iteration in git
     - name: Record ${{ github.event.inputs.nextVersion }} release in git
