@@ -1,0 +1,17 @@
+name: PR Labels
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  java:
+    name: Java/Maven
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hello
+        run: |
+          echo ${{ github.event.pull_request.labels }} | jq
+      - name: World
+        run: |
+          echo ${{ github.event.pull_request }} | jq
