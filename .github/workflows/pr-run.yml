@@ -7,7 +7,7 @@ on:
 jobs:
   java:
     name: Java/Maven PR
-    if: (github.event.action != 'labeled' && github.event.action != 'labeled') || startsWith(github.event.label.name, 'pr-')
+    if: (github.event.action != 'labeled' && github.event.action != 'unlabeled') || startsWith(github.event.label.name, 'pr-')
     runs-on: ubuntu-latest
     steps:
       - name: Action
