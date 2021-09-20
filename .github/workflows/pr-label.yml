@@ -9,15 +9,15 @@ jobs:
     name: Java/Maven
     runs-on: ubuntu-latest
     steps:
-      - name: Labels
+      - name: The Label
         run: |
           cat <<!
-          ${{ toJson(github.event.pull_request.labels) }}
+          ${{ toJson(github.event.label) }}
           ! | jq
-      - name: Full
+      - name: PR
         run: |
           cat <<!
-          ${{ toJson(github.event.pull_request) }}
+          ${{ toJson(github.event.pull_request.head.sha) }}
           ! | jq
       - name: Total
         run: |
