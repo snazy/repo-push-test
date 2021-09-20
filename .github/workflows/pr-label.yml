@@ -6,7 +6,7 @@ on:
 
 jobs:
   java:
-    name: Java/Maven
+    name: Label-Me
     runs-on: ubuntu-latest
     steps:
       - name: The Label
@@ -16,9 +16,10 @@ jobs:
           ! | jq
       - name: PR
         run: |
-          cat <<!
-          ${{ toJson(github.event.pull_request.head.sha) }}
-          ! | jq
+          GITHUB_SHA="${{ github.event.pull_request.head.sha }}"
+          echo $GITHUB_SHA
+          CHECK_SUITE_ID="$(gh api repos/snazy/repo-push-test/commits/${GITHUB_SHA}/check-runs --jq '.check_runs[0].check_suite.id')"
+
       - name: Total
         run: |
           cat <<!

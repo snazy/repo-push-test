@@ -6,7 +6,7 @@ on:
 
 jobs:
   java:
-    name: Java/Maven
+    name: Java/Maven PR
     runs-on: ubuntu-latest
     steps:
       - name: Hello
