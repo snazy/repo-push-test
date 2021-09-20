@@ -18,11 +18,11 @@ jobs:
         run: |
           GITHUB_SHA="${{ github.event.pull_request.head.sha }}"
           echo $GITHUB_SHA
-          gh auth login
-          echo getting check suite ids
-          for CHECK_SUITE_ID in $(gh api repos/snazy/repo-push-test/commits/${GITHUB_SHA}/check-runs --jq '.check_runs[].check_suite.id'); do
-            echo "check suite id: $CHECK_SUITE_ID"
-          done
+          #gh auth login
+          #echo getting check suite ids
+          #for CHECK_SUITE_ID in $(gh api repos/snazy/repo-push-test/commits/${GITHUB_SHA}/check-runs --jq '.check_runs[].check_suite.id'); do
+          #  echo "check suite id: $CHECK_SUITE_ID"
+          #done
 
       - name: Total
         run: |
