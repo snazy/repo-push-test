@@ -11,7 +11,10 @@ jobs:
     steps:
       - name: Hello
         run: |
-          echo "${{ github.event.pull_request.labels }}" | jq
+          echo "${{ toJson(github.event.pull_request.labels) }}" | jq
       - name: World
         run: |
-          echo "${{ github.event.pull_request }}" | jq
+          echo "${{ toJson(github.event.pull_request) }}" | jq
+      - name: Universe
+        run: |
+          echo "${{ toJson(github.event) }}" | jq

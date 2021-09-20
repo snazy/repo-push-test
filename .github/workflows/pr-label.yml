@@ -11,7 +11,10 @@ jobs:
     steps:
       - name: Labels
         run: |
-          echo "${{ github.event.pull_request.labels }}" | jq
+          echo "${{ toJson(github.event.pull_request.labels) }}" | jq
       - name: Full
         run: |
-          echo "${{ github.event.pull_request }}" | jq
+          echo "${{ toJson(github.event.pull_request) }}" | jq
+      - name: Total
+        run: |
+          echo "${{ toJson(github.event) }}" | jq
